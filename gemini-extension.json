@@ -1,0 +1,6 @@
+{
+  "name": "matcha",
+  "version": "1.0.0",
+  "description": "Adapts the level of English, the domain knowledge assumed, and the amount of jargon - never the facts.",
+  "contextFileName": "AGENTS.md"
+}

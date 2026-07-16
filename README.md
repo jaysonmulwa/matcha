@@ -25,8 +25,10 @@ In Claude Code:
 /plugin install matcha@matcha
 ```
 
+Plugin skills are namespaced, so the commands are `/matcha:matcha …`.
+
 <details>
-<summary>Or copy the skill by hand</summary>
+<summary>Or copy the skill by hand — shorter commands, manual updates</summary>
 
 ```bash
 git clone https://github.com/jaysonmulwa/matcha
@@ -34,7 +36,23 @@ mkdir -p ~/.claude/skills/matcha
 cp matcha/skills/matcha/SKILL.md ~/.claude/skills/matcha/
 ```
 
-Use `.claude/skills/matcha/` instead to scope it to one project.
+Installed this way the commands are `/matcha …`, with no namespace. Use
+`.claude/skills/matcha/` instead to scope it to one project.
+</details>
+
+<details>
+<summary>Other tools</summary>
+
+`AGENTS.md` carries the ladder and the rules for any agent that reads it — Codex,
+Gemini CLI (via `gemini-extension.json`), OpenCode, and others. Copy it into your
+project, or point your tool's rules file at it.
+
+**What ports:** the grid, the five levels, the fidelity rules, and everything
+request-driven — *"explain this for my exec"* works anywhere.
+
+**What doesn't:** the persistent level. `set` relies on Claude Code's CLAUDE.md
+activation and config injection, and those have no equivalent elsewhere yet. In other
+tools, name the level per request.
 </details>
 
 ## Use
@@ -45,6 +63,8 @@ Use `.claude/skills/matcha/` instead to scope it to one project.
 /matcha status             # check what's configured
 /matcha set off            # remove everything it wrote
 ```
+
+(Prefix with `matcha:` if you installed the plugin — `/matcha:matcha set plain`.)
 
 Inert until you `set` a level. `set` writes two files: `~/.claude/matcha.md` and a
 marker-delimited block in `~/.claude/CLAUDE.md`. Nothing outside the markers is
