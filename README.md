@@ -18,12 +18,26 @@ domain knowledge it assumes, and the amount of professional jargon — never the
 
 ## Install
 
-```bash
-mkdir -p ~/.claude/skills/matcha
-cp skill/matcha/SKILL.md ~/.claude/skills/matcha/
+In Claude Code:
+
+```
+/plugin marketplace add jaysonmulwa/matcha
+/plugin install matcha@matcha
 ```
 
-Then, inside Claude Code:
+<details>
+<summary>Or copy the skill by hand</summary>
+
+```bash
+git clone https://github.com/jaysonmulwa/matcha
+mkdir -p ~/.claude/skills/matcha
+cp matcha/skills/matcha/SKILL.md ~/.claude/skills/matcha/
+```
+
+Use `.claude/skills/matcha/` instead to scope it to one project.
+</details>
+
+## Use
 
 ```
 /matcha set plain          # any of the five levels — persists across sessions
@@ -35,6 +49,8 @@ Then, inside Claude Code:
 Inert until you `set` a level. `set` writes two files: `~/.claude/matcha.md` and a
 marker-delimited block in `~/.claude/CLAUDE.md`. Nothing outside the markers is
 touched, and `set off` removes both.
+
+No level needed for one-shots — just ask: *"simplify this"*, *"rewrite for my exec"*.
 
 ## The five levels
 
@@ -86,7 +102,7 @@ assumed to know more; down, the English gets harder.
 ## Related literature
 
 Loose inspirations, not conformance claims — each taken narrower than the source.
-Full notes in the [PRD appendix](./level-match-prd-v0.2.md#appendix--literature-condensed-loose-inspirations-not-conformance).
+Full notes in the [PRD appendix](./docs/prd-v0.2.md#appendix--literature-condensed-loose-inspirations-not-conformance).
 
 | Source | What we took |
 |---|---|
@@ -100,6 +116,6 @@ Full notes in the [PRD appendix](./level-match-prd-v0.2.md#appendix--literature-
 
 ---
 
-[design.md](./design.md) — how it's built, what it can't do.
-[skill/matcha/SKILL.md](./skill/matcha/SKILL.md) is the canonical source; an installed
-copy under `~/.claude/skills/` is a deployment of it.
+[docs/design.md](./docs/design.md) — how it's built, what it can't do.
+[skills/matcha/SKILL.md](./skills/matcha/SKILL.md) is the canonical source; an
+installed copy under `~/.claude/skills/` is a deployment of it.

@@ -1,0 +1,16 @@
+{
+  "name": "matcha",
+  "description": "The matcha skill: adapt Claude's English level and explanation depth to the reader.",
+  "owner": {
+    "name": "Jayson Mulwa"
+  },
+  "plugins": [
+    {
+      "name": "matcha",
+      "source": "./",
+      "description": "Adapts how Claude writes for you: the level of English, the domain knowledge it assumes, and the amount of professional jargon - never the facts.",
+      "category": "writing",
+      "tags": ["plain-language", "readability", "accessibility", "cefr"]
+    }
+  ]
+}

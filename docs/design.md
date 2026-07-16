@@ -1,7 +1,7 @@
 # Design — `matcha`
 
-Companion to [level-match-prd-v0.2.md](./level-match-prd-v0.2.md). The PRD says *what*
-and *why*; this says *how it's built* and *what it can't do*.
+Companion to [prd-v0.2.md](./prd-v0.2.md). The PRD says *what* and *why*; this says
+*how it's built* and *what it can't do*.
 
 **The project in one sentence:** a skill that rewrites what Claude says to match the
 reader's English level and domain knowledge, without making things up.
@@ -32,7 +32,10 @@ They stand as written.
 
 ## 2. What got built (v1, shipped 2026-07-15)
 
-**One skill: `~/.claude/skills/matcha/SKILL.md`.** Commands: `/matcha set
+**One skill: `skills/matcha/SKILL.md`**, shipped as a plugin (`.claude-plugin/plugin.json`)
+with a single-plugin marketplace (`.claude-plugin/marketplace.json`, `source: "./"`) so
+`/plugin marketplace add jaysonmulwa/matcha` + `/plugin install matcha@matcha` works;
+manual copy into `~/.claude/skills/matcha/` remains supported. Commands: `/matcha set
 <level|off>`, `rewrite <level>`, `status`, plus ambient triggering on
 simplify/audience phrasing. Both verbs take any of the five ladder rungs, so the
 conceptual axis has the controls the linguistic one always had. Config lives in

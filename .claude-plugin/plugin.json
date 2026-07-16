@@ -1,0 +1,11 @@
+{
+  "name": "matcha",
+  "version": "1.0.0",
+  "description": "Adapts how Claude writes for you: the level of English, the domain knowledge it assumes, and the amount of professional jargon - never the facts.",
+  "author": {
+    "name": "Jayson Mulwa",
+    "url": "https://github.com/jaysonmulwa"
+  },
+  "homepage": "https://github.com/jaysonmulwa/matcha",
+  "license": "MIT"
+}
