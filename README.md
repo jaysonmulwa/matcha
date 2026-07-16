@@ -50,9 +50,14 @@ Your default sits around `familiar`.
 
 ## The grid
 
-Two independent knobs: **linguistic** (can the reader parse the English?) and
-**conceptual** (do they know the domain?). The five levels are an L-shaped path
-through them — ①②③ raise the English, ③④⑤ drop the hand-holding.
+The grid is the idea the whole skill rests on. Two knobs, independent of each other:
+
+- **linguistic** — can the reader parse the English?
+- **conceptual** — do they know the domain?
+
+**Across, conceptual difficulty rises.** **Down, linguistic difficulty rises.** The
+five levels are an L-shaped path through the grid — ①②③ raise the English, ③④⑤ drop
+the hand-holding.
 
 | | novice | familiar | expert |
 |---|---|---|---|
@@ -64,20 +69,19 @@ The `·` cells are real, just off the ladder: low English, high domain knowledge
 L2 engineer who wants short sentences and no hand-holding. Ask for them in words:
 *"short sentences, but assume I know Kubernetes."*
 
-### One PR, nine cells
+### One statement, all nine cells
 
-A Redis cache on `/auth/token`, TTL 5 minutes, DB fallback on miss, invalidated on
-password change, *intended* to cut DB load and latency (not measured).
+The grid below renders the same PR summary in every cell — across, the reader is
+assumed to know more; down, the English gets harder.
+
+> A Redis cache on `/auth/token`, TTL 5 minutes, DB fallback on miss, invalidated on
+> password change, *intended* to cut DB load and latency (not measured).
 
 | | **novice** | **familiar** | **expert** |
 |---|---|---|---|
 | **basic** | "Logins should get faster. The app now saves recent login checks for a short time, so it does not repeat slow work. If you change your password, the saved check is cleared." | "We added a cache (a fast, short-term memory store) for login checks. Repeat logins can skip the database for up to 5 minutes. A password change clears the cached entry." | "Added Redis cache on `/auth/token`. TTL 5 min. DB path kept as fallback on miss. Invalidation on password change. Goal: lower DB load and login latency." |
 | **plain** | "Login speed should improve. The system now keeps recent login results on hand for a few minutes instead of recomputing them each time. Changing your password clears the stored result, so old credentials can't be reused." | "Auth responses are now cached in Redis for 5 minutes, so repeated logins skip the database lookup. Cache entries are invalidated on password change, and the database path remains as fallback." | "Redis cache added on `/auth/token`, 5-min TTL, DB fallback on miss, invalidation on password change. Motivation: DB load and p-latency reduction — intended, not yet measured." |
 | **full** | "Login latency should drop: the endpoint now retains recent verification results for five minutes rather than recomputing them on every request. A password change immediately clears the retained result, so revoked credentials cannot ride on a stale entry." | "The auth endpoint now employs a Redis-backed cache (5-minute TTL) that eliminates redundant database round-trips for repeat authentications; entries are invalidated on password change and the database path is preserved as fallback." | "Introduced a Redis cache on `/auth/token`: 5-min TTL, database fallback on miss, invalidation on credential change. Expected effect is reduced DB load and login latency; no benchmark accompanies the PR." |
-
-Down a column the English changes; across a row the facts on the page change. Note
-that *"should"* survives even at `basic × novice` — the speedup was intended, never
-measured, and uncertainty is a fact.
 
 ## Related literature
 
@@ -86,13 +90,13 @@ Full notes in the [PRD appendix](./level-match-prd-v0.2.md#appendix--literature-
 
 | Source | What we took |
 |---|---|
-| **CEFR** | The band structure, and the scale L2 readers already know themselves by. Levels are "CEFR-informed", never CEFR-conformant. |
-| **Nation / NGSL / Oxford 3000** | Word-frequency lists as the vocabulary mechanism — inverted: they target *acquisition* (stretch the learner); we target *comprehension* (stay in range). |
-| **Flesch-Kincaid** | A two-variable readability proxy. An instrument and a disagreement-detector, never ground truth. |
-| **Coh-Metrix** | The negative result: deleting connectives ("because", "so") *improves* FK while *lowering* comprehension. Shorten sentences; never strip connectives. |
-| **Dreyfus** | Expertise changes *which objects exist* for the reader — a novice sees steps, an expert sees "a rollback". Lineage, not authority. |
-| **Sweller / Kalyuga (expertise reversal)** | Unsolicited scaffolding measurably harms readers who already hold the schema. Hence no unsolicited analogies at `expert`. |
-| **GOV.UK / ISO 24495-1** | The register model: complex content in plain language that never infantilizes. Simple English is not childish English. |
+| [**CEFR**](https://www.coe.int/en/web/common-european-framework-reference-languages) | The band structure, and the scale L2 readers already know themselves by. Levels are "CEFR-informed", never CEFR-conformant. |
+| [**NGSL**](https://www.newgeneralservicelist.com/) · [**Oxford 3000**](https://www.oxfordlearnersdictionaries.com/wordlists/oxford3000-5000) | Word-frequency lists as the vocabulary mechanism — inverted: they target *acquisition* (stretch the learner); we target *comprehension* (stay in range). |
+| [**Flesch-Kincaid**](https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests) | A two-variable readability proxy. An instrument and a disagreement-detector, never ground truth. |
+| [**Coh-Metrix**](https://en.wikipedia.org/wiki/Coh-Metrix) | The negative result: deleting connectives ("because", "so") *improves* FK while *lowering* comprehension. Shorten sentences; never strip connectives. |
+| [**Dreyfus**](https://en.wikipedia.org/wiki/Dreyfus_model_of_skill_acquisition) | Expertise changes *which objects exist* for the reader — a novice sees steps, an expert sees "a rollback". Lineage, not authority. |
+| [**Expertise reversal**](https://en.wikipedia.org/wiki/Expertise_reversal_effect) (Sweller / Kalyuga) | Unsolicited scaffolding measurably harms readers who already hold the schema. Hence no unsolicited analogies at `expert`. |
+| [**GOV.UK style guide**](https://www.gov.uk/guidance/style-guide) · [**ISO 24495-1**](https://www.iso.org/standard/78907.html) | The register model: complex content in plain language that never infantilizes. Simple English is not childish English. |
 
 ---
 
