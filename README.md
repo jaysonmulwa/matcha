@@ -41,18 +41,28 @@ Installed this way the commands are `/matcha …`, with no namespace. Use
 </details>
 
 <details>
-<summary>Other tools</summary>
+<summary>Other tools — Codex, Gemini CLI, OpenCode</summary>
 
-`AGENTS.md` carries the ladder and the rules for any agent that reads it — Codex,
-Gemini CLI (via `gemini-extension.json`), OpenCode, and others. Copy it into your
-project, or point your tool's rules file at it.
+**What ports:** the grid, the five levels, and the fidelity rules — everything
+request-driven. *"Explain this for my exec"*, *"rewrite that at basic"* work anywhere.
 
-**What ports:** the grid, the five levels, the fidelity rules, and everything
-request-driven — *"explain this for my exec"* works anywhere.
+**What doesn't: the persistent level.** `set` writes to `~/.claude/`, which only
+Claude Code reads. Elsewhere, name the level per request.
 
-**What doesn't:** the persistent level. `set` relies on Claude Code's CLAUDE.md
-activation and config injection, and those have no equivalent elsewhere yet. In other
-tools, name the level per request.
+The recommended path is `AGENTS.md` — it carries the portable half and is read
+natively by Codex, Gemini CLI (via `gemini-extension.json`), and OpenCode. Copy it
+into your project, or point your tool's rules file at it.
+
+Codex can also install this repo as a plugin (it reads the same marketplace file):
+
+```
+codex plugin marketplace add jaysonmulwa/matcha
+codex plugin add matcha@matcha
+```
+
+Both verified. But note the caveat above applies in full: you get the ladder and the
+rules, while `set` silently writes to files Codex ignores. `AGENTS.md` is the honest
+route until a Codex-native activation path exists.
 </details>
 
 ## Use
