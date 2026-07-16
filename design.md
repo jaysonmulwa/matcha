@@ -58,6 +58,38 @@ Two findings from build-time testing (fresh headless sessions, haiku):
 `lint` remains unbuilt — optional stdlib script if ambient adherence proves weak;
 advisory only, it can count sentences and cannot check meaning.
 
+### 2.1 What the levels measurably change
+
+From diffing renders of the same CRISPR explanation.
+
+**The English move** (`plain` → `full`, rungs 2 → 3). Only three of these five are
+specified in the skill; the other two the model supplies from general register sense,
+so they work but are **unguaranteed and unlintable**.
+
+| Dimension | `plain` → `full` | Observed | Specified? |
+|---|---|---|---|
+| **Vocabulary register** | ~2,000–3,500 words → uncapped; in practice Germanic → Latinate | "a chosen **spot**" → "a chosen **location**"; "It **came from** bacteria" → "it **originates in** a bacterial defence system"; "not every spot **can be cut**" → "not every site **is addressable**" | yes — table |
+| **Sentence length** | max 20 words → unrestricted | plain: *"The cut alone changes nothing."* (5 words), none over 20. full: a 33-word sentence with a semicolon | yes — table |
+| **Glossing** | obscure terms only → none | plain: *"a short piece of RNA, a molecule closely related to DNA"*. full: no glosses | yes — table |
+| **Grammar ceiling / nesting** | moderate → unrestricted | plain: flat declaratives. full: semicolons, *"**whereupon** Cas9 cuts"*, participial openers (*"Left to its own devices…"*) | **no** |
+| **Paragraph & structure density** | shorter paragraphs, more scaffolding → dense prose | plain: 5 bolded section headers. full: headers gone, five long paragraphs | partial — the register rule says "shorter paragraphs at lower levels"; nothing about headers |
+
+A sixth, **idioms**, behaves the same way: full used *"Left to its own devices"* where
+plain said *"Left to itself"*. The PRD's tier table has an idioms column; the shipped
+skill doesn't.
+
+**Why that's fine.** Grammar ceiling and idioms were dropped in the cut, and both fired
+correctly anyway across four renders — evidence they were doing no work. They're
+free-riding on model judgment, which is exactly the category §4 says to state honestly
+rather than engineer around. If an idiom ever shows up at `basic` in real use, add one
+line.
+
+**The conceptual move** (rungs 3 → 4 → 5) changes something different: not how it's
+said, but **what's on the page**. Holding English at `plain` across all three columns,
+`expert` carried PAM, NHEJ, S/G2 and exa-cel — none of which appear at `novice` — and
+the molecular-scissors analogy present at `novice` correctly vanished. Rows change
+rendering; columns change selection.
+
 ## 3. Rules that carry their weight
 
 Everything the fidelity work yielded, compressed (`could-have-been.md` has the
