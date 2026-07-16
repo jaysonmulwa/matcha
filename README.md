@@ -1,5 +1,16 @@
 # `matcha`
 
+```
+         ) )
+        ( (
+     .---------.
+     |         |\
+     |         | |
+     |         | |
+     |         |/
+      \_______/
+```
+
 *For when you don't follow what Claude just told you about your own PR.*
 
 Five levels, from plain English for your exec up to no-hand-holding for your own
