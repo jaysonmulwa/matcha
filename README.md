@@ -46,28 +46,27 @@ CLAUDE.md block instead of the hook (a manual copy can't ship one). Use
 </details>
 
 <details>
-<summary>Other tools — Codex, Gemini CLI, OpenCode</summary>
+<summary>Other tools — Codex, Gemini, Cursor, Windsurf, Cline, Kiro, OpenCode</summary>
 
-**What ports:** the grid, the five levels, and the fidelity rules — everything
-request-driven. *"Explain this for my exec"*, *"rewrite that at basic"* work anywhere.
+Every tool below gets the **request-driven half**: the grid, the five levels, and the
+fidelity rules. *"Explain this for my exec"*, *"rewrite that at basic"* work anywhere.
+What does **not** port is the *persistent* level — `set` relies on Claude Code hooks —
+so in these tools you name the level per request. The rules are one shared body,
+carried in each tool's own config file (`AGENTS.md` is canonical; the vendor files
+mirror it verbatim).
 
-**What doesn't: the persistent level.** `set` writes to `~/.claude/`, which only
-Claude Code reads. Elsewhere, name the level per request.
+| Tool | How | File it reads |
+|---|---|---|
+| **Codex** | `codex plugin marketplace add jaysonmulwa/matcha` then `codex plugin add matcha@matcha` — or just drop `AGENTS.md` in your project | `AGENTS.md` |
+| **Gemini CLI** | copy `gemini-extension.json` + `AGENTS.md` into the project | `AGENTS.md` |
+| **OpenCode** | copy `AGENTS.md` into the project | `AGENTS.md` |
+| **Cursor** | copy `.cursor/rules/matcha.mdc` into your project's `.cursor/rules/` | `.cursor/rules/matcha.mdc` |
+| **Windsurf** | copy `.windsurf/rules/matcha.md` into `.windsurf/rules/` | `.windsurf/rules/matcha.md` |
+| **Cline** | copy `.clinerules/matcha.md` into `.clinerules/` | `.clinerules/matcha.md` |
+| **Kiro** | copy `.kiro/steering/matcha.md` into `.kiro/steering/` | `.kiro/steering/matcha.md` |
 
-The recommended path is `AGENTS.md` — it carries the portable half and is read
-natively by Codex, Gemini CLI (via `gemini-extension.json`), and OpenCode. Copy it
-into your project, or point your tool's rules file at it.
-
-Codex can also install this repo as a plugin (it reads the same marketplace file):
-
-```
-codex plugin marketplace add jaysonmulwa/matcha
-codex plugin add matcha@matcha
-```
-
-Both verified. But note the caveat above applies in full: you get the ladder and the
-rules, while `set` silently writes to files Codex ignores. `AGENTS.md` is the honest
-route until a Codex-native activation path exists.
+The quickest way to get all of them: `git clone` the repo and copy the file(s) your
+tool reads. They're small and self-contained.
 </details>
 
 ## Use
