@@ -25,7 +25,9 @@ In Claude Code:
 /plugin install matcha@matcha
 ```
 
-Plugin skills are namespaced, so the commands are `/matcha:matcha …`.
+Plugin skills are namespaced, so the commands are `/matcha:matcha …`. A bundled
+SessionStart hook activates your level each session — no CLAUDE.md editing, and
+`/plugin update` keeps it current.
 
 <details>
 <summary>Or copy the skill by hand — shorter commands, manual updates</summary>
@@ -36,7 +38,8 @@ mkdir -p ~/.claude/skills/matcha
 cp matcha/skills/matcha/SKILL.md ~/.claude/skills/matcha/
 ```
 
-Installed this way the commands are `/matcha …`, with no namespace. Use
+Installed this way the commands are `/matcha …`, with no namespace. Activation uses a
+CLAUDE.md block instead of the hook (a manual copy can't ship one). Use
 `.claude/skills/matcha/` instead to scope it to one project.
 </details>
 

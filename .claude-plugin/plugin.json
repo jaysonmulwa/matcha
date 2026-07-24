@@ -7,5 +7,6 @@
     "url": "https://github.com/jaysonmulwa"
   },
   "homepage": "https://github.com/jaysonmulwa/matcha",
-  "license": "MIT"
+  "license": "MIT",
+  "hooks": "./hooks/hooks.json"
 }

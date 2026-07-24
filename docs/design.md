@@ -40,10 +40,18 @@ manual copy into `~/.claude/skills/matcha/` remains supported. Commands: `/match
 simplify/audience phrasing. Both verbs take any of the five ladder rungs, so the
 conceptual axis has the controls the linguistic one always had. Config lives in
 `~/.claude/matcha.md` (`level:`, `gloss:`), injected at load time via `` !`cat …` ``
-dynamic context. `set` writes the config **and** upserts a marker-delimited block in
-`~/.claude/CLAUDE.md`; `set off` removes both. **Every rung writes a block** — as a
-ladder rung `full` means `full × novice` (explain mechanisms, gloss terms), which is a
-real instruction and differs from the default. It is no longer a no-op.
+dynamic context.
+
+**Ambient activation has two mechanisms, one per install shape ([ADR-0005](./adr/0005-hook-activation-for-plugin-installs.md)):**
+
+- **Plugin install** — a bundled **SessionStart hook** (`hooks/hooks.json` →
+  `matcha-activate.{sh,ps1}`) reads `~/.claude/matcha.md` and injects the level's
+  rules each session. `set` writes only `~/.claude/matcha.md`; **CLAUDE.md is never
+  touched.** This is what makes a marketplace install work with no config step —
+  the fix ponytail's hook demonstrated.
+- **Manual copy** — a skill copy cannot ship a hook, so `set` upserts a
+  marker-delimited block into `~/.claude/CLAUDE.md`. The hook defers to this block if
+  present, so the two never double-inject.
 
 Two findings from build-time testing (fresh headless sessions, haiku):
 
