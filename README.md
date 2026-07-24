@@ -125,6 +125,34 @@ assumed to know more; down, the English gets harder.
 | **plain** | "Login speed should improve. The system now keeps recent login results on hand for a few minutes instead of recomputing them each time. Changing your password clears the stored result, so old credentials can't be reused." | "Auth responses are now cached in Redis for 5 minutes, so repeated logins skip the database lookup. Cache entries are invalidated on password change, and the database path remains as fallback." | "Redis cache added on `/auth/token`, 5-min TTL, DB fallback on miss, invalidation on password change. Motivation: DB load and p-latency reduction — intended, not yet measured." |
 | **full** | "Login latency should drop: the endpoint now retains recent verification results for five minutes rather than recomputing them on every request. A password change immediately clears the retained result, so revoked credentials cannot ride on a stale entry." | "The auth endpoint now employs a Redis-backed cache (5-minute TTL) that eliminates redundant database round-trips for repeat authentications; entries are invalidated on password change and the database path is preserved as fallback." | "Introduced a Redis cache on `/auth/token`: 5-min TTL, database fallback on miss, invalidation on credential change. Expected effect is reduced DB load and login latency; no benchmark accompanies the PR." |
 
+### Walking one concept down the ladder
+
+The grid above shows every cell at once. This shows the exact commands — start strict,
+then get easier. Explaining Byzantine fault tolerance: *keeps a system correct when
+some parts fail or lie · needs more than two-thirds of parts honest (the `3f+1` rule) ·
+used in blockchains and flight control.*
+
+```
+/matcha set expert
+```
+> BFT: consensus under arbitrary node behavior, not just crash-stop. Safety holds for `f` faulty of `n ≥ 3f+1` (the PBFT bound). Contrast Raft/Paxos, which assume `n ≥ 2f+1` and no lying.
+
+```
+/matcha rewrite plain
+```
+> Byzantine fault tolerance lets a distributed system agree even when some nodes fail arbitrarily — crashing, or sending conflicting information. It tolerates up to `f` bad nodes given at least `3f+1` total, i.e. over two-thirds honest.
+
+```
+/matcha rewrite basic
+```
+> Byzantine fault tolerance keeps a system working when some parts fail or lie. Think of generals who must agree while some send false orders. *(That's an analogy, not the real thing.)* The honest parts still reach one decision — as long as more than two-thirds stay honest.
+>
+> **Couldn't simplify:** the exact rule `n ≥ 3f+1` and the names PBFT / Raft / Paxos — kept as-is rather than rounded into something false.
+
+The analogy shows up only at `basic` and is flagged; `n ≥ 3f+1` survives as a formula
+until `basic`, where it's named as held-back rather than faked into "most parts" (which
+would be wrong — the bound is *two-thirds*, not half).
+
 <details>
 <summary>Related literature</summary>
 
@@ -144,8 +172,6 @@ Full notes in the [PRD appendix](./docs/prd-v0.2.md#appendix--literature-condens
 
 ---
 
-[docs/worked-example-bft.md](./docs/worked-example-bft.md) — the same concept walked
-down the ladder, with the exact commands.
 [docs/design.md](./docs/design.md) — how it's built, what it can't do.
 [skills/matcha/SKILL.md](./skills/matcha/SKILL.md) is the canonical source; an
 installed copy under `~/.claude/skills/` is a deployment of it.
