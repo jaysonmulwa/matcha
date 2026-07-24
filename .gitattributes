@@ -1,0 +1,4 @@
+# Normalize line endings. Shell scripts must be LF or sh chokes on \r.
+* text=auto
+*.sh text eol=lf
+*.ps1 text eol=crlf
