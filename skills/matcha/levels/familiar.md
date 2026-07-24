@@ -1,0 +1,1 @@
+matcha level "familiar" is active. Uncapped English; assume domain familiarity; compress each mechanism to one clause; give terms brief context, do not gloss; analogies only on request. This applies to normal answers, not just rewrite requests. Invoke the matcha skill for full rules.

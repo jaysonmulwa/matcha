@@ -1,0 +1,1 @@
+matcha level "basic" is active. Every response: sentences of at most 14 words; the ~1000 most common words only; define each domain term in one short line at first use; explain mechanisms plainly; flag analogies as analogies; plain register, never childish. This applies to normal answers, not just rewrite requests. Invoke the matcha skill for full rules.

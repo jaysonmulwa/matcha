@@ -32,7 +32,7 @@ Maxima only — a clear 8-word sentence never fails `basic`. Proper nouns, produ
 - **empty** → ambient: apply the configured level. If `none` and the user asked to simplify, use `plain` for this response only.
 - **`set <level>`** → write `~/.claude/matcha.md` with two lines: `level: $level` and `gloss: auto` (keep an existing `gloss:` value if the file has one). Then decide how to activate ambiently:
   - **If matcha is installed as a plugin** — check whether `~/.claude/plugins/cache/matcha` exists — the bundled SessionStart hook activates the level automatically each session. Do **not** write to CLAUDE.md. Tell the user the level applies from their next session.
-  - **Otherwise (manual copy)** — upsert into `~/.claude/CLAUDE.md`, between `<!-- matcha:start -->` and `<!-- matcha:end -->`, a block naming the level and spelling out **both** of its rules from the table above — enough to act on without the skill loaded, because an "invoke the skill" pointer alone does not reliably activate. Replace the block if the markers exist; append if not; create the file if missing. **Never touch anything outside the markers.**
+  - **Otherwise (manual copy)** — upsert into `~/.claude/CLAUDE.md`, between `<!-- matcha:start -->` and `<!-- matcha:end -->`, the exact contents of `~/.claude/skills/matcha/levels/$level.md` (the single source for a level's rules; an "invoke the skill" pointer alone does not reliably activate). Replace the block if the markers exist; append if not; create the file if missing. **Never touch anything outside the markers.**
 
   Confirm in one line.
 - **`set off`** → delete `~/.claude/matcha.md` and remove the marker block. Delete CLAUDE.md only if the block was its entire content.

@@ -1,0 +1,1 @@
+matcha level "plain" is active. Every response: sentences of at most 20 words; everyday vocabulary; define obscure terms in one short line at first use; explain mechanisms plainly; flag analogies as analogies; plain register, never childish. This applies to normal answers, not just rewrite requests. Invoke the matcha skill for full rules.

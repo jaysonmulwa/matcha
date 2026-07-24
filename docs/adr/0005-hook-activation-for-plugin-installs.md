@@ -41,11 +41,13 @@ Ship a **SessionStart hook** in the plugin (`hooks/hooks.json` → `matcha-activ
 - **The two mechanisms cannot double-inject.** `set` skips the block when the hook is
   present; the hook defers when a block is present. Either guard alone is sufficient,
   so a mis-detection is still safe.
-- **Rule text now lives in three places** — `SKILL.md` (manual `set`),
-  `matcha-activate.sh`, and `matcha-activate.ps1`. The five level rules are frozen;
-  a header comment in each script flags the sync requirement. Not worth a shared data
-  file: a manual skill copy ships only `SKILL.md` and cannot read plugin data files,
-  so full de-duplication is impossible across the two install shapes.
+- **Rule text has one source: `skills/matcha/levels/<level>.md`.** Both hook scripts
+  `cat` it, and manual `set` reads it. It sits inside `skills/matcha/` (not `hooks/`)
+  precisely so both install shapes reach it — the plugin via `CLAUDE_PLUGIN_ROOT`, the
+  manual copy because the install now copies the whole skill directory, not just
+  `SKILL.md`. The scripts hold no rule text and no per-level branching, so there is
+  nothing to drift. (The `SKILL.md` ladder table remains as a human-readable summary,
+  a different granularity from the activation string.)
 - **Command name is unchanged.** The hook does not affect invocation: plugin installs
   are still `/matcha:matcha`, manual copies `/matcha` (ADR-0004 territory). The hook
   fixes *activation* parity, not the command namespace.

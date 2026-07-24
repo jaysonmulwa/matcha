@@ -1,0 +1,1 @@
+matcha level "full" is active. Uncapped English; explain mechanisms plainly; gloss domain terms on first use; flag analogies as analogies. This applies to normal answers, not just rewrite requests. Invoke the matcha skill for full rules.

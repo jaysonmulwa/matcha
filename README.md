@@ -34,9 +34,11 @@ SessionStart hook activates your level each session — no CLAUDE.md editing, an
 
 ```bash
 git clone https://github.com/jaysonmulwa/matcha
-mkdir -p ~/.claude/skills/matcha
-cp matcha/skills/matcha/SKILL.md ~/.claude/skills/matcha/
+cp -r matcha/skills/matcha ~/.claude/skills/
 ```
+
+(Copy the whole `matcha/` skill directory — `SKILL.md` plus `levels/`, which
+holds the activation rules `set` reads.)
 
 Installed this way the commands are `/matcha …`, with no namespace. Activation uses a
 CLAUDE.md block instead of the hook (a manual copy can't ship one). Use
