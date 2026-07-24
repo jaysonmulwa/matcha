@@ -144,6 +144,8 @@ Full notes in the [PRD appendix](./docs/prd-v0.2.md#appendix--literature-condens
 
 ---
 
+[docs/worked-example-bft.md](./docs/worked-example-bft.md) — the same concept walked
+down the ladder, with the exact commands.
 [docs/design.md](./docs/design.md) — how it's built, what it can't do.
 [skills/matcha/SKILL.md](./skills/matcha/SKILL.md) is the canonical source; an
 installed copy under `~/.claude/skills/` is a deployment of it.
