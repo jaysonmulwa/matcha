@@ -18,55 +18,47 @@ domain knowledge it assumes, and the amount of professional jargon — never the
 
 ## Install
 
-In Claude Code:
+**Claude Code** — from the CLI (or in a session, drop `claude` and use `/plugin …`):
 
-```
-/plugin marketplace add jaysonmulwa/matcha
-/plugin install matcha@matcha
+```bash
+claude plugin marketplace add jaysonmulwa/matcha
+claude plugin install matcha@matcha
 ```
 
-Plugin skills are namespaced, so the commands are `/matcha:matcha …`. A bundled
-SessionStart hook activates your level each session — no CLAUDE.md editing, and
+Adds `/matcha:matcha`. A SessionStart hook applies your level each session;
 `/plugin update` keeps it current.
 
-<details>
-<summary>Or copy the skill by hand — shorter commands, manual updates</summary>
+**Or copy it by hand** — commands stay bare `/matcha`, and you update it yourself:
 
 ```bash
 git clone https://github.com/jaysonmulwa/matcha
 cp -r matcha/skills/matcha ~/.claude/skills/
 ```
 
-(Copy the whole `matcha/` skill directory — `SKILL.md` plus `levels/`, which
-holds the activation rules `set` reads.)
-
-Installed this way the commands are `/matcha …`, with no namespace. Activation uses a
-CLAUDE.md block instead of the hook (a manual copy can't ship one). Use
-`.claude/skills/matcha/` instead to scope it to one project.
-</details>
-
 <details>
-<summary>Other tools — Codex, Gemini, Cursor, Windsurf, Cline, Kiro, OpenCode</summary>
+<summary>Codex, Cursor, Windsurf, Cline, Kiro, Gemini, OpenCode</summary>
 
-Every tool below gets the **request-driven half**: the grid, the five levels, and the
-fidelity rules. *"Explain this for my exec"*, *"rewrite that at basic"* work anywhere.
-What does **not** port is the *persistent* level — `set` relies on Claude Code hooks —
-so in these tools you name the level per request. The rules are one shared body,
-carried in each tool's own config file (`AGENTS.md` is canonical; the vendor files
-mirror it verbatim).
+These get matcha's **request-driven half** only — the grid, the five levels, the
+fidelity rules. The *persistent* level (`set`) is Claude-Code-only; here you name the
+level per request. Rules are one shared body (`AGENTS.md` canonical, vendor files
+mirror it).
 
-| Tool | How | File it reads |
-|---|---|---|
-| **Codex** | `codex plugin marketplace add jaysonmulwa/matcha` then `codex plugin add matcha@matcha` — or just drop `AGENTS.md` in your project | `AGENTS.md` |
-| **Gemini CLI** | copy `gemini-extension.json` + `AGENTS.md` into the project | `AGENTS.md` |
-| **OpenCode** | copy `AGENTS.md` into the project | `AGENTS.md` |
-| **Cursor** | copy `.cursor/rules/matcha.mdc` into your project's `.cursor/rules/` | `.cursor/rules/matcha.mdc` |
-| **Windsurf** | copy `.windsurf/rules/matcha.md` into `.windsurf/rules/` | `.windsurf/rules/matcha.md` |
-| **Cline** | copy `.clinerules/matcha.md` into `.clinerules/` | `.clinerules/matcha.md` |
-| **Kiro** | copy `.kiro/steering/matcha.md` into `.kiro/steering/` | `.kiro/steering/matcha.md` |
+**Codex** — from the CLI:
 
-The quickest way to get all of them: `git clone` the repo and copy the file(s) your
-tool reads. They're small and self-contained.
+```bash
+codex plugin marketplace add jaysonmulwa/matcha
+codex plugin add matcha@matcha
+```
+
+**Others** — copy the file your tool reads into your project:
+
+| Tool | File |
+|---|---|
+| Cursor | `.cursor/rules/matcha.mdc` |
+| Windsurf | `.windsurf/rules/matcha.md` |
+| Cline | `.clinerules/matcha.md` |
+| Kiro | `.kiro/steering/matcha.md` |
+| Gemini CLI · OpenCode | `AGENTS.md` |
 </details>
 
 ## Use
@@ -133,7 +125,8 @@ assumed to know more; down, the English gets harder.
 | **plain** | "Login speed should improve. The system now keeps recent login results on hand for a few minutes instead of recomputing them each time. Changing your password clears the stored result, so old credentials can't be reused." | "Auth responses are now cached in Redis for 5 minutes, so repeated logins skip the database lookup. Cache entries are invalidated on password change, and the database path remains as fallback." | "Redis cache added on `/auth/token`, 5-min TTL, DB fallback on miss, invalidation on password change. Motivation: DB load and p-latency reduction — intended, not yet measured." |
 | **full** | "Login latency should drop: the endpoint now retains recent verification results for five minutes rather than recomputing them on every request. A password change immediately clears the retained result, so revoked credentials cannot ride on a stale entry." | "The auth endpoint now employs a Redis-backed cache (5-minute TTL) that eliminates redundant database round-trips for repeat authentications; entries are invalidated on password change and the database path is preserved as fallback." | "Introduced a Redis cache on `/auth/token`: 5-min TTL, database fallback on miss, invalidation on credential change. Expected effect is reduced DB load and login latency; no benchmark accompanies the PR." |
 
-## Related literature
+<details>
+<summary>Related literature</summary>
 
 Loose inspirations, not conformance claims — each taken narrower than the source.
 Full notes in the [PRD appendix](./docs/prd-v0.2.md#appendix--literature-condensed-loose-inspirations-not-conformance).
@@ -147,6 +140,7 @@ Full notes in the [PRD appendix](./docs/prd-v0.2.md#appendix--literature-condens
 | [**Dreyfus**](https://en.wikipedia.org/wiki/Dreyfus_model_of_skill_acquisition) | Expertise changes *which objects exist* for the reader — a novice sees steps, an expert sees "a rollback". Lineage, not authority. |
 | [**Expertise reversal**](https://en.wikipedia.org/wiki/Expertise_reversal_effect) (Sweller / Kalyuga) | Unsolicited scaffolding measurably harms readers who already hold the schema. Hence no unsolicited analogies at `expert`. |
 | [**GOV.UK style guide**](https://www.gov.uk/guidance/style-guide) · [**ISO 24495-1**](https://www.iso.org/standard/78907.html) | The register model: complex content in plain language that never infantilizes. Simple English is not childish English. |
+</details>
 
 ---
 
