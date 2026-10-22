@@ -46,5 +46,20 @@ something simpler, use `plain`.
 7. **Simple English is not childish English.** GOV.UK register. Judge no one's
    proficiency.
 
+## Size budget
+
+A request may carry a size budget alongside the level: "in 4-6 sentences", "in 5
+sentences", "in 3 lines", "4 to 6 sentences". A bare "4-6" means sentences. The budget
+is a third per-request knob, not a level, and never persists.
+
+- **Counting.** A sentence ends at `.`, `!` or `?` outside code and quotes. A line is one
+  rendered line of prose. Code, quoted material and glosses are carried whole (rule 3)
+  and are not counted.
+- **Range → any count inside it passes. Fixed number → exactly that count.** The level's
+  word-per-sentence cap still applies inside the budget.
+- **Collision → rule 4.** If the budget cannot hold the required facts, say what will
+  not fit and give the closest faithful version inside the budget. Never pad to reach
+  a count; never drop a required fact silently.
+
 **Scope:** the *persistent* level (Claude Code's `/matcha set`) doesn't port here — it
 relies on Claude Code hooks. In this tool, name the level per request.

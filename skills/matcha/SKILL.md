@@ -27,6 +27,14 @@ Maxima only — a clear 8-word sentence never fails `basic`. Proper nouns, produ
 
 **The ladder is a path, not the whole grid.** The two knobs stay independent, and the four off-ladder cells are real: low English × high domain knowledge. "Short sentences but assume I know Kubernetes" is `basic` English × `expert` framing — an L2 engineer. Honour a request like that over the ladder.
 
+## Size budget
+
+A request may carry a size budget alongside the level: *"in 4-6 sentences"*, *"in 5 sentences"*, *"in 3 lines"*, *"4 to 6 sentences"*. A bare range like *"4-6"* means sentences. The budget is a third per-request knob, not a level — like "simplify" (Rule 5), it never touches `~/.claude/matcha.md`.
+
+- **Counting.** A sentence ends at `.`, `!` or `?` outside code and quotes. A line is one rendered line of prose. Code blocks, quoted material and glosses are carried whole (Rule 3) and are not counted.
+- **Range → any count inside it passes. Fixed number → exactly that count.** The budget caps length only; the level's word-per-sentence cap still applies to every sentence inside it.
+- **Collision → Rule 4.** If the budget cannot hold the required facts at the level, say what will not fit and give the closest faithful version inside the budget. Never pad to reach a count; never drop a required fact silently.
+
 ## Dispatch — action: "$action", arg: "$level"
 
 - **empty** → ambient: apply the configured level. If `none` and the user asked to simplify, use `plain` for this response only.
