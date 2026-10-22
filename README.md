@@ -68,8 +68,11 @@ codex plugin add matcha@matcha
 /matcha rewrite familiar   # one-shot, config untouched
 /matcha status             # check what's configured
 /matcha set off            # remove everything it wrote
+/matcha plain 4            # one-shot at plain, exactly 4 sentences
 /matcha plain 4-6          # one-shot at plain, 4 to 6 sentences
 /matcha plain 3l           # one-shot at plain, 3 lines
+/matcha 4-6                # configured level, 4 to 6 sentences
+/matcha rewrite plain 4-6  # re-render the last answer, budgeted
 ```
 
 (Prefix with `matcha:` if you installed the plugin — `/matcha:matcha set plain`.)

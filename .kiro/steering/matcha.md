@@ -65,4 +65,6 @@ is a third per-request knob, not a level, and never persists.
   a count; never drop a required fact silently.
 
 **Scope:** the *persistent* level (Claude Code's `/matcha set`) doesn't port here — it
-relies on Claude Code hooks. In this tool, name the level per request.
+relies on Claude Code hooks. Nor does the slash budget token (`/matcha plain 4-6`). In
+this tool, name the level and the budget per request, in words: "plain, in 4-6
+sentences".
