@@ -21,6 +21,9 @@ Treat the budget as a **third knob, per request only**.
 
 - Parsed from natural language: "in N sentences", "in N-M sentences", "in N to M
   sentences", the same with "lines". A bare range defaults to sentences.
+- Slash form: a trailing token `N`, `N-M`, `Nl` or `N-Ml` on any one-shot action —
+  `/matcha plain 4`, `/matcha rewrite plain 4-6`, `/matcha 3l`. The `l` suffix is the
+  only way to say lines there; a bare number is sentences, matching the prose default.
 - A sentence ends at `.`, `!` or `?` outside code and quotes. A line is one rendered
   line of prose. Code, quoted material and glosses are not counted — rule 3 already
   says they are carried whole.
@@ -29,7 +32,7 @@ Treat the budget as a **third knob, per request only**.
 - Collisions route through rule 4. If the budget cannot hold the required facts, the
   skill says what will not fit and gives the closest faithful version inside the
   budget. Padding and silent drops are both failures.
-- It never persists. `set` does not accept a budget and `~/.claude/matcha.md` never
+- It never persists. `set` refuses a budget in one line, and `~/.claude/matcha.md` never
   stores one. This mirrors rule 5 ("simplify" is per-request).
 
 The rule text lives once in `skills/matcha/SKILL.md` and is mirrored into `AGENTS.md`

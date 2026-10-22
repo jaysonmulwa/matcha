@@ -68,6 +68,8 @@ codex plugin add matcha@matcha
 /matcha rewrite familiar   # one-shot, config untouched
 /matcha status             # check what's configured
 /matcha set off            # remove everything it wrote
+/matcha plain 4-6          # one-shot at plain, 4 to 6 sentences
+/matcha plain 3l           # one-shot at plain, 3 lines
 ```
 
 (Prefix with `matcha:` if you installed the plugin — `/matcha:matcha set plain`.)
@@ -81,7 +83,8 @@ No level needed for one-shots — just ask: *"simplify this"*, *"rewrite for my 
 ## Size budget
 
 Add a count or a range to any request and the answer stays inside it — at the level,
-with no new facts. It never changes the saved level.
+with no new facts. It never changes the saved level. In the slash form it is a trailing
+token: `4` (exactly four sentences), `4-6` (a range), `3l` (three lines).
 
 ```
 Using matcha plain, in 4-6 sentences, explain this issue and solution.
