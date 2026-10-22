@@ -68,6 +68,11 @@ codex plugin add matcha@matcha
 /matcha rewrite familiar   # one-shot, config untouched
 /matcha status             # check what's configured
 /matcha set off            # remove everything it wrote
+/matcha plain 4            # one-shot at plain, exactly 4 sentences
+/matcha plain 4-6          # one-shot at plain, 4 to 6 sentences
+/matcha plain 3l           # one-shot at plain, 3 lines
+/matcha 4-6                # configured level, 4 to 6 sentences
+/matcha rewrite plain 4-6  # re-render the last answer, budgeted
 ```
 
 (Prefix with `matcha:` if you installed the plugin — `/matcha:matcha set plain`.)
@@ -77,6 +82,27 @@ marker-delimited block in `~/.claude/CLAUDE.md`. Nothing outside the markers is
 touched, and `set off` removes both.
 
 No level needed for one-shots — just ask: *"simplify this"*, *"rewrite for my exec"*.
+
+## Size budget
+
+Add a count or a range to any request and the answer stays inside it — at the level,
+with no new facts. It never changes the saved level. In the slash form it is a trailing
+token: `4` (exactly four sentences), `4-6` (a range), `3l` (three lines).
+
+```
+Using matcha plain, in 4-6 sentences, explain this issue and solution.
+```
+
+> The app skipped some uploads because one worker took longer than the limit. Each
+> upload has a timeout, and this worker hit it while a backup job was running. The
+> fix raises the timeout for uploads above 50 MB, so slow ones are not thrown away.
+> Smaller uploads keep the old limit. This should stop the skipped uploads, but the
+> change has not yet been measured in production.
+
+Five sentences, every one under 20 words, and "should" stays because the source said
+*intended*. Code, quotes and glosses are not counted. If the budget cannot hold the
+facts, the skill says so and gives the closest version that fits — it never pads to
+reach a count and never drops a fact to hit one.
 
 ## The five levels
 

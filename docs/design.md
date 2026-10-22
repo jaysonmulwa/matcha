@@ -36,9 +36,10 @@ They stand as written.
 with a single-plugin marketplace (`.claude-plugin/marketplace.json`, `source: "./"`) so
 `/plugin marketplace add jaysonmulwa/matcha` + `/plugin install matcha@matcha` works;
 manual copy into `~/.claude/skills/matcha/` remains supported. Commands: `/matcha set
-<level|off>`, `rewrite <level>`, `status`, plus ambient triggering on
-simplify/audience phrasing. Both verbs take any of the five ladder rungs, so the
-conceptual axis has the controls the linguistic one always had. Config lives in
+<level|off>`, `rewrite <level>`, `<level>` alone (one-shot), `status`, plus ambient
+triggering on simplify/audience phrasing. Every verb takes any of the five ladder
+rungs, so the conceptual axis has the controls the linguistic one always had. Any
+one-shot form takes a trailing size budget — `4`, `4-6`, `3l` (ADR-0006). Config lives in
 `~/.claude/matcha.md` (`level:`, `gloss:`), injected at load time via `` !`cat …` ``
 dynamic context.
 

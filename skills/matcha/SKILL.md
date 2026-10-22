@@ -2,8 +2,8 @@
 name: matcha
 description: Adapt English level and explanation depth to the reader. Use when the user asks to simplify, reword, "dumb it down", make text accessible, or write for a stated audience ("for my exec", "for an L2 engineer", "for the customer") — or when a configured level must be applied.
 when_to_use: Trigger phrases - simplify this, plainer English, easier words, explain for a non-engineer, rewrite for X, no hand-holding, assume I know this. Also /matcha set|rewrite|status commands.
-argument-hint: "[set|rewrite|status] [basic|plain|full|familiar|expert|off]"
-arguments: [action, level]
+argument-hint: "[set|rewrite|status|<level>] [basic|plain|full|familiar|expert|off] [N|N-M|Nl]"
+arguments: [action, level, budget]
 allowed-tools: Read, Write, Edit
 ---
 
@@ -27,16 +27,27 @@ Maxima only — a clear 8-word sentence never fails `basic`. Proper nouns, produ
 
 **The ladder is a path, not the whole grid.** The two knobs stay independent, and the four off-ladder cells are real: low English × high domain knowledge. "Short sentences but assume I know Kubernetes" is `basic` English × `expert` framing — an L2 engineer. Honour a request like that over the ladder.
 
-## Dispatch — action: "$action", arg: "$level"
+## Size budget
 
-- **empty** → ambient: apply the configured level. If `none` and the user asked to simplify, use `plain` for this response only.
+A request may carry a size budget alongside the level: *"in 4-6 sentences"*, *"in 5 sentences"*, *"in 3 lines"*, *"4 to 6 sentences"*. A bare range like *"4-6"* means sentences. In the slash form the budget is a trailing token: `N` (exactly N sentences), `N-M` (a range), `Nl` or `N-Ml` (lines) — `/matcha plain 4`, `/matcha plain 4-6`, `/matcha plain 3l`. The budget is a third per-request knob, not a level — like "simplify" (Rule 5), it never touches `~/.claude/matcha.md`.
+
+- **Counting.** A sentence ends at `.`, `!` or `?` outside code and quotes. A line is one rendered line of prose. Code blocks, quoted material and glosses are carried whole (Rule 3) and are not counted.
+- **Range → any count inside it passes. Fixed number → exactly that count.** The budget caps length only; the level's word-per-sentence cap still applies to every sentence inside it.
+- **Collision → Rule 4.** If the budget cannot hold the required facts at the level, say what will not fit and give the closest faithful version inside the budget. Never pad to reach a count; never drop a required fact silently.
+
+## Dispatch — action: "$action", arg: "$level", budget: "$budget"
+
+If the last token matches `N`, `N-M`, `Nl` or `N-Ml`, it is the budget and the rest dispatch as below. A budget is one-shot and never written to config.
+
+- **empty** → ambient: apply the configured level. If `none` and the user asked to simplify, use `plain` for this response only. With a budget (`/matcha 4-6`) → answer at the configured level inside the budget.
+- **`<level>` alone** (`/matcha plain`, `/matcha plain 4-6`) → answer this request at that level, one-shot, inside the budget if given. **Never change the config.**
 - **`set <level>`** → write `~/.claude/matcha.md` with two lines: `level: $level` and `gloss: auto` (keep an existing `gloss:` value if the file has one). Then decide how to activate ambiently:
   - **If matcha is installed as a plugin** — check whether `~/.claude/plugins/cache/matcha` exists — the bundled SessionStart hook activates the level automatically each session. Do **not** write to CLAUDE.md. Tell the user the level applies from their next session.
   - **Otherwise (manual copy)** — upsert into `~/.claude/CLAUDE.md`, between `<!-- matcha:start -->` and `<!-- matcha:end -->`, the exact contents of `~/.claude/skills/matcha/levels/$level.md` (the single source for a level's rules; an "invoke the skill" pointer alone does not reliably activate). Replace the block if the markers exist; append if not; create the file if missing. **Never touch anything outside the markers.**
 
-  Confirm in one line.
+  Confirm in one line. `set` takes no budget — `/matcha set plain 4` → refuse in one line, config untouched.
 - **`set off`** → delete `~/.claude/matcha.md` and remove the marker block. Delete CLAUDE.md only if the block was its entire content.
-- **`rewrite <level>`** → re-render your previous response (or text the user supplied) at that level, one-shot. **Never change the config.**
+- **`rewrite <level>`** → re-render your previous response (or text the user supplied) at that level, one-shot, inside the budget if given (`/matcha rewrite plain 4-6`). **Never change the config.**
   - No level given → use the configured level; if none, `plain`.
   - Previous response already at that level → say so and stop; don't re-emit near-identical text.
   - Rewriting *up* cannot recover what the source dropped. Render the same facts richer — never add new ones. If they want the fuller version, they should re-ask the question, which re-sources from your knowledge.
