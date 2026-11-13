@@ -9,7 +9,7 @@ allowed-tools: Read, Write, Edit
 
 ## Configured level
 
-!`cat ~/.claude/matcha.md 2>/dev/null || echo "level: none"`
+Before you act, read `~/.claude/matcha.md` with the Read tool. `~` is the user's home folder. A missing file means `level: none`. Do not read it with a shell `cat`: Claude Code blocks `cat` on files outside the session's working folders.
 
 ## The ladder
 
