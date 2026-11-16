@@ -40,8 +40,9 @@ manual copy into `~/.claude/skills/matcha/` remains supported. Commands: `/match
 triggering on simplify/audience phrasing. Every verb takes any of the five ladder
 rungs, so the conceptual axis has the controls the linguistic one always had. Any
 one-shot form takes a trailing size budget — `4`, `4-6`, `3l` (ADR-0006). Config lives in
-`~/.claude/matcha.md` (`level:`, `gloss:`), injected at load time via `` !`cat …` ``
-dynamic context.
+`~/.claude/matcha.md` (`level:`, `gloss:`), which the skill reads with the Read tool when
+it runs. It used to be injected at load time via `` !`cat …` `` dynamic context, until
+Claude Code started blocking that (§6.1).
 
 **Ambient activation has two mechanisms, one per install shape ([ADR-0005](./adr/0005-hook-activation-for-plugin-installs.md)):**
 
@@ -188,3 +189,25 @@ proves unreliable at scale.
 **Gate status: passed** — ambient activation demonstrated in fresh sessions via two
 mechanisms. One caveat: both passing runs used `--model haiku` and n=1 each; adherence
 quality (vs. activation) deserves a couple more samples before v1 ships.
+
+### 6.1 Retest on Claude Code 2.1.323 (2026-11-13, Windows)
+
+The skill used to load its config with `` !`cat ~/.claude/matcha.md …` ``. Claude Code
+2.1.323 blocks that command before the skill runs, so every `/matcha` command failed.
+The SessionStart hook kept working, because hooks are not subject to this check.
+
+```
+Shell command permission check failed for pattern "!`cat ~/.claude/matcha.md ...`":
+cat in 'C:\Users\Lenovo\.claude\matcha.md' was blocked. For security, Claude Code may
+only concatenate files from the allowed working directories for this session
+```
+
+**Fix:** `SKILL.md` now tells Claude to read the file with the Read tool, which is
+already in `allowed-tools`. A missing file still means `level: none`.
+
+| Run (`claude -p … --plugin-dir .`, cwd outside `~/.claude`) | Before | After |
+|---|---|---|
+| `/matcha:matcha status` | blocked, no answer | Read succeeds, reports `plain` |
+| `/matcha:matcha plain 3 explain what a database index is` | blocked, no answer | Read succeeds, exactly 3 sentences |
+
+Neither run showed a permission prompt for the Read.
